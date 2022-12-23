@@ -1,17 +1,27 @@
 package com.fifa
 
+import com.fifa.Repository.CountryRepository
+import com.fifa.Repository.Impl.CountryRepositoryImpl
 import com.fifa.db.DatabaseFactory
-import io.ktor.server.application.*
+import com.fifa.service.CountryService
+import com.fifa.service.impl.CountryServiceImpl
 import io.ktor.server.engine.*
 import io.ktor.server.tomcat.*
-import com.fifa.plugins.*
+
 
 fun main() {
-    embeddedServer(Tomcat, port = 8088, host = "127.0.0.1", module = Application::module)
+    embeddedServer(Tomcat, port = 8088, host = "127.0.0.1") {
+
+        DatabaseFactory.init() //Initializing database
+
+        val service: CountryService = CountryServiceImpl()
+        val repository: CountryRepository = CountryRepositoryImpl(service)
+//        countryRoutes(repository)
+//        authRoutes(repository)
+    }
         .start(wait = true)
 }
 
-fun Application.module() {
-    DatabaseFactory.init() //Initializing database
-    configureRouting()
-}
+
+
+

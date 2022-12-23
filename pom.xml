@@ -8,7 +8,7 @@
     <name>com.fifa.worldcup</name>
     <description>com.fifa.worldcup</description>
     <properties>
-        <ktor_version>2.2.1</ktor_version>
+        <ktor_version>2.1.0</ktor_version>
         <exposed_version>0.40.1</exposed_version>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin_version>1.7.22</kotlin_version>
@@ -70,7 +70,11 @@
             <artifactId>ktor-auth-jwt</artifactId>
             <version>1.6.8</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-serialization-kotlinx-protobuf-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-jackson</artifactId>
