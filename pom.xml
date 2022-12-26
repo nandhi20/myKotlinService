@@ -72,13 +72,8 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-serialization-kotlinx-protobuf-jvm</artifactId>
+            <artifactId>ktor-serialization-jackson-jvm</artifactId>
             <version>${ktor_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-jackson</artifactId>
-            <version>1.6.8</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -109,6 +104,11 @@
             <version>${exposed_version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-content-negotiation-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
 
     </dependencies>
     <build>
