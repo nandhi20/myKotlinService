@@ -5,9 +5,11 @@ import com.fifa.db.DatabaseFactory.dbQuery
 import com.fifa.models.Country
 import com.fifa.models.CountryParams
 import com.fifa.service.CountryService
+import com.fifa.util.JWTConfig
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
 class CountryServiceImpl : CountryService {
@@ -22,6 +24,10 @@ class CountryServiceImpl : CountryService {
         return mapToCountry(statement?.resultedValues?.get(0))
     }
 
+    override suspend fun getCountries(): List<Country?> {
+        return dbQuery { CountryTable.selectAll().map { mapToCountry(it) } }
+    }
+
     override suspend fun findCountryByName(countryName: String): Country? {
         return dbQuery {
             CountryTable.select { CountryTable.countryName.eq(countryName) }.map { mapToCountry(it) }.singleOrNull()
@@ -33,7 +39,8 @@ class CountryServiceImpl : CountryService {
         else Country(
             id = row[CountryTable.id],
             countryCode = row[CountryTable.countryCode],
-            countryName = row[CountryTable.countryName]
+            countryName = row[CountryTable.countryName],
+            token = JWTConfig.instance.createToken(row[CountryTable.countryCode])
         )
     }
 }

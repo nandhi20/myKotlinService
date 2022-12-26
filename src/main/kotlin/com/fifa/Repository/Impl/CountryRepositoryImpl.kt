@@ -4,7 +4,7 @@ import com.fifa.Repository.CountryRepository
 import com.fifa.models.CountryParams
 import com.fifa.models.Response
 import com.fifa.service.CountryService
-import io.ktor.features.*
+import io.ktor.server.plugins.*
 
 
 class CountryRepositoryImpl(private val countryService: CountryService) : CountryRepository {
@@ -23,8 +23,11 @@ class CountryRepositoryImpl(private val countryService: CountryService) : Countr
 
     }
 
-    override suspend fun login(countryName: String, countryCode: String): Response<Any> {
-        TODO("Not yet implemented")
+    override suspend fun getCountries(): Response<Any> {
+        return Response.SuccessResponse(
+            data = countryService.getCountries(),
+            message = "Country registered successfully"
+        )
     }
 
     private suspend fun isCountryExists(countryName: String): Boolean =
