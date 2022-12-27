@@ -4,6 +4,7 @@ import com.fifa.Repository.CountryRepository
 import com.fifa.models.CountryParams
 import com.fifa.models.Response
 import com.fifa.service.CountryService
+import io.ktor.http.*
 import io.ktor.server.plugins.*
 
 
@@ -11,7 +12,7 @@ class CountryRepositoryImpl(private val countryService: CountryService) : Countr
     override suspend fun registerCountry(params: CountryParams): Response<Any> {
         return if (isCountryExists(params.countryName)) {
             Response.ErrorResponse(
-                exception = BadRequestException("400"),
+                exception = BadRequestException(HttpStatusCode.BadRequest.value.toString()),
                 message = "Country name already found"
             )
         } else {
@@ -26,8 +27,22 @@ class CountryRepositoryImpl(private val countryService: CountryService) : Countr
     override suspend fun getCountries(): Response<Any> {
         return Response.SuccessResponse(
             data = countryService.getCountries(),
-            message = "Country registered successfully"
+            message = "Countries retrieved successfully"
         )
+    }
+
+    override suspend fun removeCountry(code: String?): Response<Any> {
+        return if (code == null) {
+            Response.ErrorResponse(
+                exception = BadRequestException(HttpStatusCode.BadRequest.value.toString()),
+                message = "Country doesn't exist"
+            )
+        } else {
+            Response.SuccessResponse(
+                data = countryService.removeCountry(code),
+                message = "Country removed successfully"
+            )
+        }
     }
 
     private suspend fun isCountryExists(countryName: String): Boolean =

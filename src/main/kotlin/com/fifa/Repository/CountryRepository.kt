@@ -6,4 +6,5 @@ import com.fifa.models.Response
 interface CountryRepository {
     suspend fun registerCountry(params: CountryParams): Response<Any>
     suspend fun getCountries(): Response<Any>
+    suspend fun removeCountry(code: String?): Response<Any>
 }

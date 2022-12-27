@@ -22,9 +22,9 @@ object DatabaseFactory {
         val config = HikariConfig()
         config.driverClassName = "org.postgresql.Driver"
         config.jdbcUrl = "jdbc:postgresql://localhost:5432/worldcup"
-//        config.password = "Nandy"
+        config.password = "Nandy"
         config.username = "postgres"
-        config.password = "nandy"
+//        config.password = "nandy"
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"

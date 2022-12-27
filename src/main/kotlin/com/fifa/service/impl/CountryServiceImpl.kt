@@ -6,10 +6,8 @@ import com.fifa.models.Country
 import com.fifa.models.CountryParams
 import com.fifa.service.CountryService
 import com.fifa.util.JWTConfig
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
 class CountryServiceImpl : CountryService {
@@ -28,9 +26,19 @@ class CountryServiceImpl : CountryService {
         return dbQuery { CountryTable.selectAll().map { mapToCountry(it) } }
     }
 
+    override suspend fun removeCountry(countryCode: String): Int {
+        return dbQuery { CountryTable.deleteWhere { CountryTable.countryCode.eq(countryCode) } }
+    }
+
     override suspend fun findCountryByName(countryName: String): Country? {
         return dbQuery {
             CountryTable.select { CountryTable.countryName.eq(countryName) }.map { mapToCountry(it) }.singleOrNull()
+        }
+    }
+
+    override suspend fun findCountryByCode(countryCode: String): Country? {
+        return dbQuery {
+            CountryTable.select { CountryTable.countryCode.eq(countryCode) }.map { mapToCountry(it) }.singleOrNull()
         }
     }
 

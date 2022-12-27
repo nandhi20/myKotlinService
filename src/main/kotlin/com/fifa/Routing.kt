@@ -26,6 +26,10 @@ fun Application.createRoutes() {
                     val result = repository.getCountries()
                     call.respond(result.statusCode, result)
                 }
+                delete("/{countryCode}") {
+                    val result = repository.removeCountry(call.parameters["countryCode"])
+                    call.respond(result.statusCode, result)
+                }
             }
         }
     }
