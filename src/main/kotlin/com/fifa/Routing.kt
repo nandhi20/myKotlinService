@@ -1,7 +1,7 @@
 package com.fifa
 
 import com.fifa.Repository.CountryRepository
-import com.fifa.Repository.Impl.CountryRepositoryImpl
+import com.fifa.Repository.impl.CountryRepositoryImpl
 import com.fifa.models.CountryParams
 import com.fifa.service.CountryService
 import com.fifa.service.impl.CountryServiceImpl
@@ -31,7 +31,7 @@ fun Application.createRoutes() {
                     call.respond(result.statusCode, result)
                 }
                 put("/{countryId}") {
-                    val result = repository.updateCountry(call.receive<CountryParams>(), call.parameters["countryId"])
+                    val result = repository.updateCountry(call.receive(), call.parameters["countryId"])
                     call.respond(result.statusCode, result)
                 }
             }
