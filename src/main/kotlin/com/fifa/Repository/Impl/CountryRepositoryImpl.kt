@@ -1,6 +1,7 @@
 package com.fifa.Repository.Impl
 
 import com.fifa.Repository.CountryRepository
+import com.fifa.models.Country
 import com.fifa.models.CountryParams
 import com.fifa.models.Response
 import com.fifa.service.CountryService
@@ -45,6 +46,33 @@ class CountryRepositoryImpl(private val countryService: CountryService) : Countr
         }
     }
 
+    override suspend fun updateCountry(params: CountryParams, id: String?): Response<Any> {
+        return if (id == null) {
+
+            Response.ErrorResponse(
+                exception = BadRequestException(HttpStatusCode.BadRequest.value.toString()),
+                message = "Country doesn't exist"
+            )
+        } else {
+            var country: Country = Country(
+                id = id.toInt(),
+                countryName = params.countryName,
+                countryCode = params.countryCode,
+                token = null
+            )
+            Response.SuccessResponse(
+                data = countryService.updateCountry(country),
+                message = "Country updated successfully"
+            )
+        }
+    }
+
+
     private suspend fun isCountryExists(countryName: String): Boolean =
         countryService.findCountryByName(countryName) != null
+
+    private suspend fun isCountryExistsById(id: Int): Boolean {
+        println(id)
+        return countryService.fundCountryById(id) != null
+    }
 }

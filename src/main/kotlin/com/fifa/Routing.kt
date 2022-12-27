@@ -22,12 +22,16 @@ fun Application.createRoutes() {
                 call.respond(result.statusCode, result)
             }
             authenticate {
-                get("/all") {
+                get("/") {
                     val result = repository.getCountries()
                     call.respond(result.statusCode, result)
                 }
                 delete("/{countryCode}") {
                     val result = repository.removeCountry(call.parameters["countryCode"])
+                    call.respond(result.statusCode, result)
+                }
+                put("/{countryId}") {
+                    val result = repository.updateCountry(call.receive<CountryParams>(), call.parameters["countryId"])
                     call.respond(result.statusCode, result)
                 }
             }

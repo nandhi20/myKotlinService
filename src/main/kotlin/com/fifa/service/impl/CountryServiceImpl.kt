@@ -30,6 +30,17 @@ class CountryServiceImpl : CountryService {
         return dbQuery { CountryTable.deleteWhere { CountryTable.countryCode.eq(countryCode) } }
     }
 
+    override suspend fun updateCountry(params: Country): Int {
+        return dbQuery {
+            CountryTable.update({ CountryTable.id.eq(params.id) }) {
+                it[countryName] = params.countryName
+                it[countryCode] = params.countryCode
+                it[id] = params.id
+            }
+        }
+
+    }
+
     override suspend fun findCountryByName(countryName: String): Country? {
         return dbQuery {
             CountryTable.select { CountryTable.countryName.eq(countryName) }.map { mapToCountry(it) }.singleOrNull()
@@ -39,6 +50,12 @@ class CountryServiceImpl : CountryService {
     override suspend fun findCountryByCode(countryCode: String): Country? {
         return dbQuery {
             CountryTable.select { CountryTable.countryCode.eq(countryCode) }.map { mapToCountry(it) }.singleOrNull()
+        }
+    }
+
+    override suspend fun fundCountryById(id: Int): Country? {
+        return dbQuery {
+            CountryTable.select { CountryTable.id.eq(id) }.map { mapToCountry(it) }.singleOrNull()
         }
     }
 
