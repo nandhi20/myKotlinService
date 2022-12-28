@@ -1,14 +1,15 @@
-package com.fifa.util
+package com.fifa.security
 
 import com.fifa.service.CountryService
 import com.fifa.service.impl.CountryServiceImpl
+import com.fifa.util.ApplicationConstant
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
 
 fun Application.securityConfiguration() {
-    JWTConfig.init("MyService")
+    JWTConfig.init(ApplicationConstant.SECRET)
     val service: CountryService = CountryServiceImpl()
     install(Authentication) {
         jwt {

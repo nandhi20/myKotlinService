@@ -1,16 +1,17 @@
-package com.fifa.util
+package com.fifa.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import com.fifa.util.ApplicationConstant
 
 class JWTConfig private constructor(secret: String) {
     private val algorithm = Algorithm.HMAC256(secret)
 
     companion object {
-        private const val ISSUER = "MyService"
-        private const val AUDIENCE = "MyService"
-        const val CLAIM = "code"
+        private const val ISSUER = ApplicationConstant.SECRET
+        private const val AUDIENCE = ApplicationConstant.SECRET
+        const val CLAIM = ApplicationConstant.CLAIM
 
         lateinit var instance: JWTConfig
             private set

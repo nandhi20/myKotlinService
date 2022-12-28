@@ -4,8 +4,8 @@ import com.fifa.db.CountryTable
 import com.fifa.db.DatabaseFactory.dbQuery
 import com.fifa.models.Country
 import com.fifa.models.CountryParams
+import com.fifa.security.JWTConfig
 import com.fifa.service.CountryService
-import com.fifa.util.JWTConfig
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.statements.InsertStatement

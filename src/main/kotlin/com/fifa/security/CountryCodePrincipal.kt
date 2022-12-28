@@ -1,4 +1,4 @@
-package com.fifa.util
+package com.fifa.security
 
 import io.ktor.server.auth.*
 

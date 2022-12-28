@@ -1,5 +1,6 @@
 package com.fifa.db
 
+import com.fifa.util.ApplicationConstant
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -20,14 +21,14 @@ object DatabaseFactory {
 
     private fun dataSource(): HikariDataSource {
         val config = HikariConfig()
-        config.driverClassName = "org.postgresql.Driver"
-        config.jdbcUrl = "jdbc:postgresql://localhost:5432/worldcup"
-        config.password = "Nandy"
-        config.username = "postgres"
+        config.driverClassName = ApplicationConstant.DATABASE_DRIVER
+        config.jdbcUrl = ApplicationConstant.DATABASE_URL
+        config.password = ApplicationConstant.DATABASE_PASSWORD
+        config.username = ApplicationConstant.DATABASE_USERNAME
 //        config.password = "nandy"
         config.maximumPoolSize = 3
         config.isAutoCommit = false
-        config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
+        config.transactionIsolation = ApplicationConstant.DATABASE_TRANSACTION
         config.validate()
         return HikariDataSource(config)
     }
